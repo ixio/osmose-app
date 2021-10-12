@@ -165,13 +165,14 @@ def annotation_task_show(request, task_id):
     root_url = STATIC_URL + task.dataset_file.dataset.dataset_path
     spectros_configs = set(task.dataset_file.dataset.spectro_configs.all()) & set(task.annotation_campaign.spectro_configs.all())
     # We should probably use filename for sound_name but this allows to simplify seeding
-    sound_name = task.dataset_file.filepath.split('/')[-1].replace('.wav', '')
+    dataset_conf, sound_path = task.dataset_file.filepath.split('/')[-2:]
+    sound_name = sound_path.replace('.wav', '')
     spectro_urls = [{
         'nfft': spectro_config.nfft,
         'winsize': spectro_config.window_size,
         'overlap': spectro_config.overlap,
         'urls': [
-            urlquote(f'{root_url}/spectrograms/{spectro_config.name}/{sound_name}/{tile}')
+            urlquote(f'{root_url}/analysis/spectrograms/{dataset_conf}/{spectro_config.name}/{sound_name}/{tile}')
         for tile in spectro_config.zoom_tiles(sound_name)]
     } for spectro_config in spectros_configs]
     prev_annotations = task.results.values(

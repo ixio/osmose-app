@@ -59,7 +59,7 @@ class Command(management.BaseCommand):
             start = parse_datetime('2012-10-03T12:00:00+0200')
             end = start + timedelta(minutes=15)
             audio_metadatum = AudioMetadatum.objects.create(start=(start + timedelta(hours=k)), end=(end + timedelta(hours=k)))
-            self.dataset.files.create(filename=f'sound{k:03d}.wav', filepath='audio/50h_0.wav', size=58982478, audio_metadatum=audio_metadatum)
+            self.dataset.files.create(filename=f'sound{k:03d}.wav', filepath='raw/audio/dataset_conf/50h_0.wav', size=58982478, audio_metadatum=audio_metadatum)
 
     def _create_annotation_sets(self):
         sets = [
